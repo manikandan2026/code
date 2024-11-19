@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>☀️ Modern Weather Dashboard</h1>
+            <p>Get real-time weather updates for any location!</p>
+        </header>
+        <main>
+            <form method="POST" action="/">
+                <input type="text" name="city" placeholder="🌍 Enter city name" required>
+                <button type="submit">Get Weather</button>
+            </form>
+
+            {% if weather_data %}
+                {% if weather_data.error %}
+                    <div class="error-box">
+                        <p>{{ weather_data.error }}</p>
+                    </div>
+                {% else %}
+                    <div class="weather-info">
+                        <h2>{{ weather_data.name }}, {{ weather_data.sys.country }}</h2>
+                        <div class="weather-details">
+                            <p><strong>🌡️ Temperature:</strong> {{ weather_data.main.temp }}°C</p>
+                            <p><strong>🌥️ Condition:</strong> {{ weather_data.weather[0].description }}</p>
+                            <p><strong>💧 Humidity:</strong> {{ weather_data.main.humidity }}%</p>
+                            <p><strong>🌬️ Wind Speed:</strong> {{ weather_data.wind.speed }} m/s</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </main>
+        <footer>
+            <p>🌟 Powered by OpenWeatherMap | Designed By Manikandan</p>
+        </footer>
+    </div>
+</body>
+</html>
